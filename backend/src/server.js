@@ -36,11 +36,6 @@ const loginLimiter = rateLimit({
   legacyHeaders: false,
 });
 
-//Check 
-app.listen(3000, '0.0.0.0', () => {
-  console.log('>>>>>> check API running');
-});
-
 // Webhook action
 app.post("/api/webhookAction", async (req, res) => {
   try {
@@ -157,4 +152,9 @@ app.get("/api/me", authenticateToken, (req, res) => {
 
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Auth API running on port ${PORT}`);
+});
+
+//Check 
+app.listen(3000, '0.0.0.0', () => {
+  console.log('>>>>>> check API running');
 });
