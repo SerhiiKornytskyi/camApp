@@ -68,8 +68,6 @@ app.post("/api/register", async (req, res) => {
     const users = getUsers();
     const normalizedUsername = username.trim().toLowerCase();
 
-    console.log(">>>", users, username, password, normalizedUsername);
-
     if (users.some(u => u.username === normalizedUsername)) {
       return res.status(409).json({
         message: "User already exists",
@@ -152,9 +150,4 @@ app.get("/api/me", authenticateToken, (req, res) => {
 
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Auth API running on port ${PORT}`);
-});
-
-//Check 
-app.listen(3000, '0.0.0.0', () => {
-  console.log('>>>>>> check API running');
 });
