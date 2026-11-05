@@ -148,6 +148,11 @@ app.get("/api/me", authenticateToken, (req, res) => {
   });
 });
 
+
+app.post("/api/trigger", loginLimiter, () => {
+  console.log("Trigger endpoint called");
+});
+
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Auth API running on port ${PORT}`);
 });
