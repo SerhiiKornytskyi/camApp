@@ -13,3 +13,8 @@ export type UseLoginReturnType = {
     isLoading: boolean;
     error: Error | null;
 }
+
+export type TriggerData = {
+    message: string;
+    count: number;
+}

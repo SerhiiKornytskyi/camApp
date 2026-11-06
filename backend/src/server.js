@@ -1,5 +1,6 @@
 
 require("dotenv").config();
+const { incrementTriggerCounter, getTriggerCounter } = require("./utils/triggerCounter");
 
 const express = require("express");
 const bcrypt = require("bcryptjs");
@@ -148,9 +149,25 @@ app.get("/api/me", authenticateToken, (req, res) => {
   });
 });
 
+// Trigger endpoint -> used by hook
+app.post("/api/trigger", loginLimiter, async (req, res) => {
+  incrementTriggerCounter();
+  console.log(`Trigger incremented. Current count: ${getTriggerCounter()}`);
+  res.status(200).json({ message: "Trigger incremented", count: getTriggerCounter() });
+});
 
-app.post("/api/trigger", loginLimiter, () => {
-  console.log("Trigger endpoint called");
+// Trigger endpoint -> used by FE app (tanstack)
+app.get("/api/trigger", async (req, res) => {
+  try {
+    res.status(200)
+      .json({ 
+        message: "Poll trigger endpoint", 
+        count: getTriggerCounter() 
+      });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server counter error" });
+  }
 });
 
 app.listen(PORT, "0.0.0.0", () => {
