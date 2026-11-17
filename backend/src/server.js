@@ -201,7 +201,7 @@ app.get("/api/videos", authenticateToken, (req, res) => {
       .filter(file => /\.(mp4|webm|mov|mkv)$/i.test(file))
       .map(file => ({
         name: file,
-        url: `/api/video/${encodeURIComponent(file)}`
+        url: `/api/videos/${encodeURIComponent(file)}`
       }));
 
     res.json(videos);
