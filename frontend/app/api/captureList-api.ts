@@ -13,5 +13,10 @@ export const getCaptureList = async () => {
         },
     });
     if (!response.ok) throw new Error('Failed to fetch captured list');
-    return response.json() as Promise<CaptureData[]>;
+    const captures = (await response.json()) as CaptureData[];
+    // <video> can't send headers, so pass the token as a query param
+    return captures.map(c => ({
+        ...c,
+        url: `${c.url}?token=${encodeURIComponent(token ?? "")}`,
+    }));
 }

@@ -177,7 +177,15 @@ const capturedDir = path.join(__dirname, "../captured");
 // app.use("/api/video", authenticateToken, express.static(capturedDir));
 
 // get single
-app.get("/api/videos:filename", authenticateToken, (req, res) => {
+// <video src> can't send an Authorization header, so accept ?token= for this route
+function tokenFromQuery(req, res, next) {
+  if (!req.headers.authorization && typeof req.query.token === "string") {
+    req.headers.authorization = `Bearer ${req.query.token}`;
+  }
+  next();
+}
+
+app.get("/api/videos/:filename", tokenFromQuery, authenticateToken, (req, res) => {
   const filename = req.params.filename;
 
   // Validate filename before accessing filesystem
@@ -185,8 +193,12 @@ app.get("/api/videos:filename", authenticateToken, (req, res) => {
     return res.status(400).json({ error: 'Invalid filename' });
   }
 
-  const filePath = path.join('/home/protectr/captured', filename);
-  res.sendFile(filePath);
+  const filePath = path.join(capturedDir, filename);
+  res.sendFile(filePath, err => {
+    if (err && !res.headersSent) {
+      res.status(err.status || 404).json({ error: "Video not found" });
+    }
+  });
 });
 
 app.get("/api/videos", authenticateToken, (req, res) => {
