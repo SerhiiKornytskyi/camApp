@@ -88,7 +88,7 @@ export default function LiveViewPage() {
       >
         {isCaptureListLoading ? (
           <p className="mt-2 text-zinc-600" role="status">
-            Loading trigger status…
+            Loading captures list…
           </p>
         ) : isCaptureListError ? (
           <p className="mt-2 text-sm text-red-600" role="alert">
