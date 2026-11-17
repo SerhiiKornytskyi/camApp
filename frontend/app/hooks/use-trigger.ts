@@ -1,6 +1,5 @@
 import {useQuery} from '@tanstack/react-query';
 import {getTriggerStatus} from '../api/trigger-api';
-import { TriggerData } from '../../types/types';
 
 const useTriggerQuery = () => {
     return useQuery({

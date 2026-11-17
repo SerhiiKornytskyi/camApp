@@ -1,6 +1,5 @@
 import {useQuery} from '@tanstack/react-query';
 import {getCaptureList} from '../api/captureList-api';
-import {removeToken, setToken, getToken} from '../utils/token-utils';
 
 const useCaptureListQuery = () => {
     return useQuery({

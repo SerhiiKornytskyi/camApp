@@ -10,7 +10,7 @@ const LiveViewComponent = ({path} : {path: string}) => {
 
     return (
         <>
-            <video controls>
+            <video className="w-full h-100" controls>
                 <source src={path} type="video/x-matroska" />
             </video>
         </>

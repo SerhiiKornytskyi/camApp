@@ -177,7 +177,6 @@ const capturedDir = path.join(__dirname, "../captured");
 app.use("/api/video", authenticateToken, express.static(capturedDir));
 
 app.get("/api/videos", authenticateToken, (req, res) => {
-  console.log(capturedDir)
   fs.readdir(capturedDir, (err, files) => {
     if (err) {
       return res.status(500).json({
