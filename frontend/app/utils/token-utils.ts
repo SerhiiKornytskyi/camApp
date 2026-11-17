@@ -1,10 +1,10 @@
 const TOKEN_KEY = "camapp_token";
 
+// useful auth
 export const getToken = (): string | null => {
     if (typeof window === "undefined") {
         return null;
     }
-
     try {
         return localStorage.getItem(TOKEN_KEY);
     } catch (error) {
