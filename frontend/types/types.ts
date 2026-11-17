@@ -18,3 +18,8 @@ export type TriggerData = {
     message: string;
     count: number;
 }
+
+export type CaptureData = {
+    name: string;
+    url: string;
+}

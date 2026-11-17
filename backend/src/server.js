@@ -170,6 +170,32 @@ app.get("/api/trigger", async (req, res) => {
   }
 });
 
+// =========== get captured files 
+const capturedDir = path.join(__dirname, "../captured");
+
+// get single
+app.use("/api/video", authenticateToken, express.static(capturedDir));
+
+app.get("/api/videos", authenticateToken, (req, res) => {
+  console.log(capturedDir)
+  fs.readdir(capturedDir, (err, files) => {
+    if (err) {
+      return res.status(500).json({
+        error: "Unable to read video directory"
+      });
+    }
+
+    const videos = files
+      .filter(file => /\.(mp4|webm|mov|mkv)$/i.test(file))
+      .map(file => ({
+        name: file,
+        url: `/api/video/${encodeURIComponent(file)}`
+      }));
+
+    res.json(videos);
+  });
+});
+
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Auth API running on port ${PORT}`);
 });
