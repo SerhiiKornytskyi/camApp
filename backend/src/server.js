@@ -173,8 +173,21 @@ app.get("/api/trigger", async (req, res) => {
 // =========== get captured files 
 const capturedDir = path.join(__dirname, "../captured");
 
+// exposing folder: 
+// app.use("/api/video", authenticateToken, express.static(capturedDir));
+
 // get single
-app.use("/api/video", authenticateToken, express.static(capturedDir));
+app.get("/api/videos:filename", authenticateToken, (req, res) => {
+  const filename = req.params.filename;
+
+  // Validate filename before accessing filesystem
+  if (!/^[a-zA-Z0-9._-]+\.mkv$/.test(filename)) {
+    return res.status(400).json({ error: 'Invalid filename' });
+  }
+
+  const filePath = path.join('/home/protectr/captured', filename);
+  res.sendFile(filePath);
+});
 
 app.get("/api/videos", authenticateToken, (req, res) => {
   fs.readdir(capturedDir, (err, files) => {
