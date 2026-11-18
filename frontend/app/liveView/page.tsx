@@ -78,8 +78,8 @@ export default function LiveViewPage() {
         aria-live="polite"
       >
         <h2 className="text-lg font-medium text-zinc-900">Live view</h2>
-         <Suspense fallback={<Loading />}>
-          <LiveViewComponent path={'/api/video'} />
+        <Suspense fallback={<Loading />}>
+          <LiveViewComponent path={`${process.env.NEXT_PUBLIC_TEMP_RPI_LINK}:${process.env.NEXT_PUBLIC_TEMP_RPI_STREAM_PORT}/video`} />
         </Suspense>
       </section>
       <section
